@@ -1,4 +1,3 @@
-#yolo
 require_relative './assembler.rb'
 
 module Assembly
@@ -13,7 +12,7 @@ module Assembly
     end
 
     def read_source_lines
-      #@source_lines = IO.readlines @source_file
+      @source_lines = IO.readlines @source_file
     end
 
     def get_output_file
