@@ -19,6 +19,7 @@ module Assembly
     end
 
     def convert_hex(tokens)
+      instruction = Instruction.new
       command = tokens.first.upcase
       if CONDS.has_key? command[-2..-1]
         cond = command[-2..-1]
@@ -26,8 +27,10 @@ module Assembly
       else
         cond = CONDS["AL"]
       end
-      opcode = OPCODES[command]
-      type = TYPES[opcode]
+      instruction.cond = cond
+      instruction.command = command
+      instruction.opcode = OPCODES[command]
+      instruction.type = TYPES[opcode]
     end
 
   end
