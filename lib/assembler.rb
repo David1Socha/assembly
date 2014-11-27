@@ -1,4 +1,4 @@
-require_relative './opcodes'
+require_relative './codes'
 
 module Assembly
 
@@ -20,8 +20,13 @@ module Assembly
 
     def convert_hex(tokens)
       instruction = tokens.first.upcase
+      if CONDS.has_key? instruction[-2..-1]
+        cond = instruction[-2..-1]
+        instruction = instruction[0..-3]
+      else
+        cond = CONDS["AL"]
+      end
       opcode = OPCODES[instruction]
-      
     end
 
   end
