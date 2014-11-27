@@ -19,18 +19,18 @@ module Assembly
     end
 
     def convert_hex(tokens)
-      instruction = Instruction.new
       command = tokens.first.upcase
-      if CONDS.has_key? command[-2..-1]
-        cond = command[-2..-1]
-        command = command[0..-3]
+      instruction = Instruction.new command
+      if instruction.type == :R
+        asdf
+      elsif instruction.type == :B
+        asdf
+      elsif instruction.type == :D
+        asdf
       else
-        cond = CONDS["AL"]
+        asdf
       end
-      instruction.cond = cond
-      instruction.command = command
-      instruction.opcode = OPCODES[command]
-      instruction.type = TYPES[opcode]
+      return instruction.to_hex
     end
 
   end
