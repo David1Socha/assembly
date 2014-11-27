@@ -1,3 +1,5 @@
+require_relative './opcodes'
+
 module Assembly
 
   class Assembler
@@ -14,6 +16,12 @@ module Assembly
 
     def tokenize(line)
       line.tr_s("\\\t ",',').split(',').delete_if(&:empty?)
+    end
+
+    def convert_hex(tokens)
+      instruction = tokens.first.upcase
+      opcode = OPCODES[instruction]
+      
     end
 
   end
