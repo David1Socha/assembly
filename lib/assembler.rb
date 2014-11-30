@@ -22,7 +22,7 @@ module Assembly
       command = tokens.first.upcase
       instruction = Instruction.new command
       if instruction.type == :R
-        asdf
+        build_r instruction
       elsif instruction.type == :B
         asdf
       elsif instruction.type == :D
@@ -31,6 +31,13 @@ module Assembly
         asdf
       end
       return instruction.to_hex
+    end
+
+    def build_r(instr, tokens)
+      instr.regT = tokens[1].to_i(2).to_s
+      instr.regS = tokens[2].to_i(2).to_s
+      instr.regD = tokens[3].to_i(2).to_s
+      instr.opx = OPX[instr.command]
     end
 
   end
