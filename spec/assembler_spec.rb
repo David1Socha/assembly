@@ -47,11 +47,20 @@ describe "Assembler" do
 
   end
 
+  describe "#convert_binary" do
+
+    it "correctly converts add instructions into binary" do
+      binary_form = @assembler.convert_binary ["ADD", "R2", "R0", "R4"]
+      expect(binary_form).to eq("001000000100011000001100")
+    end
+
+  end
+
   describe "#convert_hex" do
 
     it "correctly converts add instructions into hex" do
-      hex_form = @assembler.convert_hex ["Add", "r2", "r0", "r4"]
-      expect(hex_form).to eq("20460C")
+      hex_form = @assembler.convert_hex ["ADD", "R2", "R0", "R4"]
+      expect(hex_form).to eq("20460c")
     end
 
   end
