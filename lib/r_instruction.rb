@@ -25,7 +25,12 @@ module Assembly
     end
 
     def to_hex
-      return "000000"
+      binary_groups = to_binary.scan(/..../)
+      return binary_groups.map{ |binary| RInstruction.hex(binary)}.join
+    end
+
+    def self.hex(binary)
+      return binary.to_i(2).to_s(16)
     end
 
     def ==(other)
