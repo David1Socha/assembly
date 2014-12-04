@@ -5,8 +5,15 @@ module Assembly
   class RInstruction
     attr_accessor :cond, :opcode, :regT, :regD, :regS, :opx, :s, :command
 
-    def initialize(command)
+    def initialize(regT, regS, regD, opx, s, cond, opcode, command)
+      @regT = regT
+      @regS = regS
+      @regD = regD
+      @opx = opx
+      @s = s
+      @opcode = opcode
       @command = command
+      @cond = cond
     end
 
     def self.type
@@ -14,7 +21,7 @@ module Assembly
     end
 
     def to_binary
-      return "000000000000000000000000"
+      return [regT, regS, regD, opx, s, cond, opcode].join
     end
 
     def to_hex

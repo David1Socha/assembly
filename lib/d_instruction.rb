@@ -3,7 +3,7 @@ require_relative './codes'
 module Assembly
   
   class DInstruction
-    attr_accessor :cond, :opcode, :regT, :regS, :S, :immediate, :command
+    attr_accessor :cond, :opcode, :regT, :regS, :s, :immediate, :command
 
     def initialize(command)
       @command = command
