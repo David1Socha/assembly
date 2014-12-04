@@ -14,11 +14,16 @@ module Assembly
     end
 
     def to_binary
-      return "000000000000000000000000"
+      return [const, opcode].join
+    end
+    
+    def to_hex
+      binary_groups = to_binary.scan(/..../)
+      return binary_groups.map{ |binary| RInstruction.hex(binary)}.join
     end
 
-    def to_hex
-      return "000000"
+    def self.hex(binary)
+      return binary.to_i(2).to_s(16)
     end
 
   end
