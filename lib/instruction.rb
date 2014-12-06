@@ -4,7 +4,9 @@ module Assembly
   
   class Instruction
 
-    private_class_method :new
+    def initialize
+      raise NotImplementedError
+    end
 
     def to_hex
       binary_groups = to_binary.scan(/..../)
