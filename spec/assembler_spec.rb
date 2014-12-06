@@ -54,6 +54,11 @@ describe "Assembler" do
       expect(binary_form).to eq("001000000100011000001100")
     end
 
+    it "correctly converts jump tokens into binary" do
+      binary_form = @assembler.convert_binary get_jump_tokens
+      expect(binary_form).to eq("000000000000000000111000")
+    end
+
   end
 
   describe "#convert_hex" do
