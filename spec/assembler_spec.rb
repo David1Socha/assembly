@@ -49,8 +49,8 @@ describe "Assembler" do
 
   describe "#convert_binary" do
 
-    it "correctly converts add instructions into binary" do
-      binary_form = @assembler.convert_binary ["ADD", "R2", "R0", "R4"]
+    it "correctly converts add tokens into binary" do
+      binary_form = @assembler.convert_binary get_add_tokens
       expect(binary_form).to eq("001000000100011000001100")
     end
 
@@ -58,8 +58,8 @@ describe "Assembler" do
 
   describe "#convert_hex" do
 
-    it "correctly converts add instructions into hex" do
-      hex_form = @assembler.convert_hex ["ADD", "R2", "R0", "R4"]
+    it "correctly converts add tokens into hex" do
+      hex_form = @assembler.convert_hex get_add_tokens
       expect(hex_form).to eq("20460c")
     end
 
