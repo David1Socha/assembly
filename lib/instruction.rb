@@ -10,7 +10,7 @@ module Assembly
 
     def to_hex
       binary_groups = to_binary.scan(/..../)
-      return binary_groups.map{ |binary| RInstruction.hex(binary)}.join
+      return binary_groups.map{ |binary| Instruction.hex(binary)}.join
     end
 
     def self.hex(binary)
