@@ -55,6 +55,10 @@ describe "Assembler" do
         test_convert_binary(@assembler, get_add_tokens, "001000000100011000001100")
       end
 
+      it "correctly convert sub tokens into binary" do
+        test_convert_binary(@assembler, get_sub_tokens, "001000100010100000001100")
+      end
+
     end
 
     describe "(J type)" do
@@ -81,6 +85,10 @@ describe "Assembler" do
 
       it "correctly converts add tokens into hex" do
         test_convert_hex(@assembler, get_add_tokens, "20460c")
+      end
+
+      it "correctly converts sub tokens into hex" do
+        test_convert_hex(@assembler, get_sub_tokens, "22280c")
       end
 
     end
