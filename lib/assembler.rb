@@ -59,7 +59,11 @@ module Assembly
     def build_r_instruction(command, cond, tokens)
       regT_dec = tokens[1][1..-1]
       regS_dec = tokens[2][1..-1]
-      regD_dec = tokens[3][1..-1]
+      if (command == "CMP")
+        regD_dec = "0"
+      else
+        regD_dec = tokens[3][1..-1]
+      end
       regT = Assembler.to_binary_str(REGISTER_BITS, regT_dec)
       regS = Assembler.to_binary_str(REGISTER_BITS, regS_dec)
       regD = Assembler.to_binary_str(REGISTER_BITS, regD_dec)
