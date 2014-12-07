@@ -8,6 +8,7 @@ module Assembly
 
   DEFAULT_COND_NAME = "AL"
   REGISTER_BITS = 4
+  CONST_BITS = 20
 
   class Assembler
 
@@ -67,9 +68,17 @@ module Assembly
       r_instr = RInstruction.new(regT, regS, regD, opx, s, cond, opcode, command)
     end
 
+    def build_j_instruction(command, tokens)
+      const_dec = tokens.first
+      const = Assembler.to_binary_str(CONST_BITS, const_dec)
+      opcode = OPCODES[command]
+      j_instr = JInstruction.new(const, opcode, command)
+    end
+
     def build_instruction(tokens)
       command = tokens.shift
       type, cond, command = Assembler.determine_type_cond command
+      puts "here", type
       case type
       when :R
         instruction = build_r_instruction(command, cond, tokens)
@@ -78,7 +87,7 @@ module Assembly
       when :B
         instruction = BInstruction.new(command, cond)
       when :J
-        instruction = JInstruction.new(command, cond)
+        instruction = build_j_instruction(command, tokens)
       end
       return instruction
     end
