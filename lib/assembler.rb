@@ -7,6 +7,9 @@ require_relative './b_instruction'
 module Assembly
 
   DEFAULT_COND_NAME = "AL"
+  REGISTER_BITS = 4
+  CONST_BITS = 20
+  CONST_16_BITS = 16
 
   class Assembler
 
@@ -38,8 +41,9 @@ module Assembly
       end
     end
 
-    def self.reg_binary(reg_number)
-      format = "%04b" % reg_number
+    def self.to_binary_str(num_bits, decimal)
+      formatter = "%0#{num_bits}b"
+      binary_str = formatter % decimal
     end
 
     def convert_hex(tokens)
@@ -56,13 +60,29 @@ module Assembly
       regT_dec = tokens[0][1..-1]
       regS_dec = tokens[1][1..-1]
       regD_dec = tokens[2][1..-1]
-      regT = Assembler.reg_binary regT_dec
-      regS = Assembler.reg_binary regS_dec
-      regD = Assembler.reg_binary regD_dec
+      regT = Assembler.to_binary_str(REGISTER_BITS, regT_dec)
+      regS = Assembler.to_binary_str(REGISTER_BITS, regS_dec)
+      regD = Assembler.to_binary_str(REGISTER_BITS, regD_dec)
       opx = OPX[command]
       s = S_SET_COMMANDS.include?(command) ? "1" : "0"
       opcode = OPCODES[command]
       r_instr = RInstruction.new(regT, regS, regD, opx, s, cond, opcode, command)
+    end
+
+    def build_j_instruction(command, tokens)
+      if (command == "LI")
+        target_reg_dec = tokens[0][1..-1]
+        const_16_dec = tokens[1]
+        target_reg = Assembler.to_binary_str(REGISTER_BITS, target_reg_dec)
+        const_16 = Assembler.to_binary_str(CONST_16_BITS, const_16_dec)
+        const = target_reg + const_16
+      else
+        const_dec = tokens[0]
+        const = Assembler.to_binary_str(CONST_BITS, const_dec)
+      end
+      
+      opcode = OPCODES[command]
+      j_instr = JInstruction.new(const, opcode, command)
     end
 
     def build_instruction(tokens)
@@ -76,7 +96,7 @@ module Assembly
       when :B
         instruction = BInstruction.new(command, cond)
       when :J
-        instruction = JInstruction.new(command, cond)
+        instruction = build_j_instruction(command, tokens)
       end
       return instruction
     end

@@ -49,18 +49,64 @@ describe "Assembler" do
 
   describe "#convert_binary" do
 
-    it "correctly converts add instructions into binary" do
-      binary_form = @assembler.convert_binary ["ADD", "R2", "R0", "R4"]
-      expect(binary_form).to eq("001000000100011000001100")
+    describe "(R type)" do
+
+      it "correctly converts add tokens into binary" do
+        binary_form = @assembler.convert_binary get_add_tokens
+        expect(binary_form).to eq("001000000100011000001100")
+      end
+
+    end
+
+    describe "(J type)" do
+
+      it "correctly converts jump tokens into binary" do
+        binary_form = @assembler.convert_binary get_jump_tokens
+        expect(binary_form).to eq("000000000000001110000000")
+      end
+
+      it "correctly converts jump and link tokens into binary" do
+        binary_form = @assembler.convert_binary get_jal_tokens
+        expect(binary_form).to eq("000000000000001110000001")
+      end
+
+      it "correctly converts load immediate tokens into binary" do
+        binary_form = @assembler.convert_binary get_loadi_tokens
+        expect(binary_form).to eq("010000000000000001010010")
+      end
+
     end
 
   end
 
   describe "#convert_hex" do
 
-    it "correctly converts add instructions into hex" do
-      hex_form = @assembler.convert_hex ["ADD", "R2", "R0", "R4"]
-      expect(hex_form).to eq("20460c")
+    describe "(R type)" do
+
+      it "correctly converts add tokens into hex" do
+        hex_form = @assembler.convert_hex get_add_tokens
+        expect(hex_form).to eq("20460c")
+      end
+
+    end
+
+    describe "(J type)" do
+
+      it "correctly converts jump tokens into hex" do
+        hex_form = @assembler.convert_hex get_jump_tokens
+        expect(hex_form).to eq("000380")
+      end
+
+      it "correctly converts jump and link tokens into hex" do
+        hex_form = @assembler.convert_hex get_jal_tokens
+        expect(hex_form).to eq ("000381")
+      end
+
+      it "correctly converts load immediate tokens into hex" do
+        hex_form = @assembler.convert_hex get_loadi_tokens
+        expect(hex_form).to eq ("400052")
+      end
+
     end
 
   end

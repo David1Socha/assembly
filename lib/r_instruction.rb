@@ -1,8 +1,9 @@
 require_relative './codes'
+require_relative './instruction'
 
 module Assembly
   
-  class RInstruction
+  class RInstruction < Instruction
     attr_accessor :cond, :opcode, :regT, :regD, :regS, :opx, :s, :command
 
     def initialize(regT, regS, regD, opx, s, cond, opcode, command)
@@ -22,15 +23,6 @@ module Assembly
 
     def to_binary
       return [regT, regS, regD, opx, s, cond, opcode].join
-    end
-
-    def to_hex
-      binary_groups = to_binary.scan(/..../)
-      return binary_groups.map{ |binary| RInstruction.hex(binary)}.join
-    end
-
-    def self.hex(binary)
-      return binary.to_i(2).to_s(16)
     end
 
     def ==(other)

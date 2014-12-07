@@ -1,3 +1,19 @@
 def get_sample_lines
-  "Add r2, r0, r4"
+  "Add r2, r0, r4\nj 56\njal 56\nli r4, 5"
+end
+
+def get_add_tokens
+  ["ADD", "R2", "R0", "R4"]
+end
+
+def get_jump_tokens
+  ["J", "56"]
+end
+
+def get_jal_tokens
+  ["JAL", "56"]
+end
+
+def get_loadi_tokens
+  ["LI", "R4", "5"]
 end

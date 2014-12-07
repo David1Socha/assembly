@@ -1,8 +1,9 @@
 require_relative './codes'
+require_relative './instruction'
 
 module Assembly
   
-  class DInstruction
+  class DInstruction < Instruction
     attr_accessor :cond, :opcode, :regT, :regS, :s, :immediate, :command
 
     def initialize(command)
@@ -15,10 +16,6 @@ module Assembly
 
     def to_binary
       return "000000000000000000000000"
-    end
-
-    def to_hex
-      return "000000"
     end
 
   end
