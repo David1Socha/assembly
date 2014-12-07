@@ -63,6 +63,10 @@ describe "Assembler" do
         test_convert_binary(@assembler, get_and_tokens, "010101111001000000001100")
       end
 
+      it "correctly converts xor tokens into binary" do
+        test_convert_binary(@assembler, get_xor_tokens, "010101111001010000001100")
+      end
+
     end
 
     describe "(J type)" do
@@ -97,6 +101,10 @@ describe "Assembler" do
 
       it "correctly converts add tokens into hex" do
         test_convert_hex(@assembler, get_and_tokens, "57900c")
+      end
+
+      it "correctly converts xor tokens into hex" do
+        test_convert_hex(@assembler, get_xor_tokens, "57940c")
       end
 
     end
