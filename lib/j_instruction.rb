@@ -6,8 +6,10 @@ module Assembly
   class JInstruction < Instruction
     attr_accessor :opcode, :const, :command
 
-    def initialize(command)
+    def initialize(command, const, opcode)
       @command = command
+      @const = const
+      @opcode = opcode
     end
 
     def self.type
