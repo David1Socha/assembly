@@ -1,5 +1,5 @@
 def get_sample_lines
-  "Add r2, r0, r4\nj 56\njal 56\nli r4, 5"
+  "Add r2, r0, r4\nj 56\njal 56\nli r4, 5\nAND r5, r7, r9\nXOR r5, r7, r9\nOR r5, r7, r9\nSLL R4, R3, R2\nCMP r7 r0\njr r3"
 end
 
 def get_add_tokens
