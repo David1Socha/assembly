@@ -49,28 +49,44 @@ describe "Assembler" do
 
   describe "#convert_binary" do
 
-    it "correctly converts add tokens into binary" do
-      binary_form = @assembler.convert_binary get_add_tokens
-      expect(binary_form).to eq("001000000100011000001100")
+    describe "(R type)" do
+
+      it "correctly converts add tokens into binary" do
+        binary_form = @assembler.convert_binary get_add_tokens
+        expect(binary_form).to eq("001000000100011000001100")
+      end
+
     end
 
-    it "correctly converts jump tokens into binary" do
-      binary_form = @assembler.convert_binary get_jump_tokens
-      expect(binary_form).to eq("000000000000001110000000")
+    describe "(J type)" do
+
+      it "correctly converts jump tokens into binary" do
+        binary_form = @assembler.convert_binary get_jump_tokens
+        expect(binary_form).to eq("000000000000001110000000")
+      end
+
     end
 
   end
 
   describe "#convert_hex" do
 
-    it "correctly converts add tokens into hex" do
-      hex_form = @assembler.convert_hex get_add_tokens
-      expect(hex_form).to eq("20460c")
+    describe "(R type)" do
+
+      it "correctly converts add tokens into hex" do
+        hex_form = @assembler.convert_hex get_add_tokens
+        expect(hex_form).to eq("20460c")
+      end
+
     end
 
-    it "correctly converts jump tokens into binary" do
-      hex_form = @assembler.convert_hex get_jump_tokens
-      expect(hex_form).to eq("000380")
+    describe "(J type)" do
+
+      it "correctly converts jump tokens into binary" do
+        hex_form = @assembler.convert_hex get_jump_tokens
+        expect(hex_form).to eq("000380")
+      end
+      
     end
 
   end
