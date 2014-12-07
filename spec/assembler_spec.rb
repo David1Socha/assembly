@@ -76,7 +76,7 @@ describe "Assembler" do
       end
 
       it "correctly converts cmp tokens into binary" do
-        test_convert_binary(@assembler, get_cmp_tokens, "011100000000000000001110")
+        test_convert_binary(@assembler, get_cmp_tokens, "011100000000000100001110")
       end
 
     end
@@ -128,7 +128,7 @@ describe "Assembler" do
       end
 
       it "correctly converts cmp tokens into hex" do
-        test_convert_hex(@assembler, get_cmp_tokens, "70000e")
+        test_convert_hex(@assembler, get_cmp_tokens, "70010e")
       end
 
     end
