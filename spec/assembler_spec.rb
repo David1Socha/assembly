@@ -71,6 +71,10 @@ describe "Assembler" do
         test_convert_binary(@assembler, get_or_tokens, "010101111001001000001100")
       end
 
+      it "correctly converts sll tokens into binary" do
+        test_convert_binary(@assembler, get_sll_tokens, "010000110010000000001111")
+      end
+
     end
 
     describe "(J type)" do
@@ -113,6 +117,10 @@ describe "Assembler" do
 
       it "correctly converts or tokens into hex" do
         test_convert_hex(@assembler, get_or_tokens, "57920c")
+      end
+
+      it "correctly converts sll tokens into hex" do
+        test_convert_hex(@assembler, get_sll_tokens, "43200f")
       end
 
     end
