@@ -52,8 +52,7 @@ describe "Assembler" do
     describe "(R type)" do
 
       it "correctly converts add tokens into binary" do
-        binary_form = @assembler.convert_binary get_add_tokens
-        expect(binary_form).to eq("001000000100011000001100")
+        test_convert_binary(@assembler, get_add_tokens, "001000000100011000001100")
       end
 
     end
@@ -61,18 +60,15 @@ describe "Assembler" do
     describe "(J type)" do
 
       it "correctly converts jump tokens into binary" do
-        binary_form = @assembler.convert_binary get_jump_tokens
-        expect(binary_form).to eq("000000000000001110000000")
+        test_convert_binary(@assembler, get_jump_tokens, "000000000000001110000000")
       end
 
       it "correctly converts jump and link tokens into binary" do
-        binary_form = @assembler.convert_binary get_jal_tokens
-        expect(binary_form).to eq("000000000000001110000001")
+        test_convert_binary(@assembler, get_jal_tokens, "000000000000001110000001")
       end
 
       it "correctly converts load immediate tokens into binary" do
-        binary_form = @assembler.convert_binary get_loadi_tokens
-        expect(binary_form).to eq("010000000000000001010010")
+        test_convert_binary(@assembler, get_loadi_tokens, "010000000000000001010010")
       end
 
     end
@@ -84,8 +80,7 @@ describe "Assembler" do
     describe "(R type)" do
 
       it "correctly converts add tokens into hex" do
-        hex_form = @assembler.convert_hex get_add_tokens
-        expect(hex_form).to eq("20460c")
+        test_convert_hex(@assembler, get_add_tokens, "20460c")
       end
 
     end
@@ -93,18 +88,15 @@ describe "Assembler" do
     describe "(J type)" do
 
       it "correctly converts jump tokens into hex" do
-        hex_form = @assembler.convert_hex get_jump_tokens
-        expect(hex_form).to eq("000380")
+        test_convert_hex(@assembler, get_jump_tokens, "000380")
       end
 
       it "correctly converts jump and link tokens into hex" do
-        hex_form = @assembler.convert_hex get_jal_tokens
-        expect(hex_form).to eq ("000381")
+        test_convert_hex(@assembler, get_jal_tokens, "000381")
       end
 
       it "correctly converts load immediate tokens into hex" do
-        hex_form = @assembler.convert_hex get_loadi_tokens
-        expect(hex_form).to eq ("400052")
+        test_convert_hex(@assembler, get_loadi_tokens, "400052")
       end
 
     end
