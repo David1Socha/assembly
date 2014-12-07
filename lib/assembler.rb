@@ -57,9 +57,18 @@ module Assembly
     end
 
     def build_r_instruction(command, cond, tokens)
-      regT_dec = tokens[0][1..-1]
-      regS_dec = tokens[1][1..-1]
-      regD_dec = tokens[2][1..-1]
+      if (command == "JR")
+        regT_dec = "0"
+        regS_dec = tokens[1][1..-1]
+      else
+        regT_dec = tokens[1][1..-1]
+        regS_dec = tokens[2][1..-1]
+      end
+      if (command == "CMP" || command == "JR")
+        regD_dec = "0"
+      else
+        regD_dec = tokens[3][1..-1]
+      end
       regT = Assembler.to_binary_str(REGISTER_BITS, regT_dec)
       regS = Assembler.to_binary_str(REGISTER_BITS, regS_dec)
       regD = Assembler.to_binary_str(REGISTER_BITS, regD_dec)
@@ -71,13 +80,13 @@ module Assembly
 
     def build_j_instruction(command, tokens)
       if (command == "LI")
-        target_reg_dec = tokens[0][1..-1]
-        const_16_dec = tokens[1]
+        target_reg_dec = tokens[1][1..-1]
+        const_16_dec = tokens[2]
         target_reg = Assembler.to_binary_str(REGISTER_BITS, target_reg_dec)
         const_16 = Assembler.to_binary_str(CONST_16_BITS, const_16_dec)
         const = target_reg + const_16
       else
-        const_dec = tokens[0]
+        const_dec = tokens[1]
         const = Assembler.to_binary_str(CONST_BITS, const_dec)
       end
       
@@ -86,7 +95,7 @@ module Assembly
     end
 
     def build_instruction(tokens)
-      command = tokens.shift
+      command = tokens[0]
       type, cond, command = Assembler.determine_type_cond command
       case type
       when :R
