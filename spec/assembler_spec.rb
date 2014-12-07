@@ -75,6 +75,10 @@ describe "Assembler" do
         test_convert_binary(@assembler, get_sll_tokens, "010000110010000000001111")
       end
 
+      it "correctly converts cmp tokens into binary" do
+        test_convert_binary(@assembler, get_cmp_tokens, "011100000000000000001110")
+      end
+
     end
 
     describe "(J type)" do
@@ -121,6 +125,10 @@ describe "Assembler" do
 
       it "correctly converts sll tokens into hex" do
         test_convert_hex(@assembler, get_sll_tokens, "43200f")
+      end
+
+      it "correctly converts cmp tokens into hex" do
+        test_convert_hex(@assembler, get_cmp_tokens, "70000e")
       end
 
     end
