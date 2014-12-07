@@ -57,9 +57,14 @@ module Assembly
     end
 
     def build_r_instruction(command, cond, tokens)
-      regT_dec = tokens[1][1..-1]
-      regS_dec = tokens[2][1..-1]
-      if (command == "CMP")
+      if (command == "JR")
+        regT_dec = "0"
+        regS_dec = tokens[1][1..-1]
+      else
+        regT_dec = tokens[1][1..-1]
+        regS_dec = tokens[2][1..-1]
+      end
+      if (command == "CMP" || command == "JR")
         regD_dec = "0"
       else
         regD_dec = tokens[3][1..-1]

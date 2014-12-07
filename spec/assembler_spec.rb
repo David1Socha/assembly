@@ -79,6 +79,10 @@ describe "Assembler" do
         test_convert_binary(@assembler, get_cmp_tokens, "011100000000000100001110")
       end
 
+      it "correctly converts jr tokens into binary" do
+        test_convert_binary(@assembler, get_jr_tokens, "000000110000000000001101")
+      end
+      
     end
 
     describe "(J type)" do
@@ -129,6 +133,10 @@ describe "Assembler" do
 
       it "correctly converts cmp tokens into hex" do
         test_convert_hex(@assembler, get_cmp_tokens, "70010e")
+      end
+
+      it "correctly converts jr tokens into hex" do
+        test_convert_hex(@assembler, get_jr_tokens, "03000d")
       end
 
     end
