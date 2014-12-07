@@ -9,3 +9,11 @@ end
 def get_jump_tokens
   ["J", "56"]
 end
+
+def get_jal_tokens
+  ["JAL", "56"]
+end
+
+def get_loadi_tokens
+  ["LI", "R4", "5"]
+end
