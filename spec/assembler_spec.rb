@@ -65,6 +65,16 @@ describe "Assembler" do
         expect(binary_form).to eq("000000000000001110000000")
       end
 
+      it "correctly converts jump and link tokens into binary" do
+        binary_form = @assembler.convert_binary get_jal_tokens
+        expect(binary_form).to eq("000000000000001110000001")
+      end
+
+      it "correctly converts load immediate tokens into binary" do
+        binary_form = @assembler.convert_binary get_loadi_tokens
+        expect(binary_form).to eq("010000000000000001010010")
+      end
+
     end
 
   end
@@ -96,7 +106,7 @@ describe "Assembler" do
         hex_form = @assembler.convert_hex get_loadi_tokens
         expect(hex_form).to eq ("400052")
       end
-      
+
     end
 
   end
