@@ -82,9 +82,19 @@ describe "Assembler" do
 
     describe "(J type)" do
 
-      it "correctly converts jump tokens into binary" do
+      it "correctly converts jump tokens into hex" do
         hex_form = @assembler.convert_hex get_jump_tokens
         expect(hex_form).to eq("000380")
+      end
+
+      it "correctly converts jump and link tokens into hex" do
+        hex_form = @assembler.convert_hex get_jal_tokens
+        expect(hex_form).to eq ("000381")
+      end
+
+      it "correctly converts load immediate tokens into hex" do
+        hex_form = @assembler.convert_hex get_loadi_tokens
+        expect(hex_form).to eq ("400052")
       end
       
     end
