@@ -78,7 +78,6 @@ module Assembly
     def build_instruction(tokens)
       command = tokens.shift
       type, cond, command = Assembler.determine_type_cond command
-      puts "here", type
       case type
       when :R
         instruction = build_r_instruction(command, cond, tokens)
