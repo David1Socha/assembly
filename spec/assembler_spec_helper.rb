@@ -17,3 +17,31 @@ end
 def get_loadi_tokens
   ["LI", "R4", "5"]
 end
+
+def get_sub_tokens
+  ["SUB", "R2", "R2", "R2"]
+end
+
+def get_and_tokens
+  ["AND", "R5", "R7", "R9"]
+end
+
+def get_xor_tokens
+  ["XOR", "R5", "R7", "R9"]
+end
+
+def get_or_tokens
+  ["OR", "R5", "R7", "R9"]
+end
+
+def get_sll_tokens
+  ["SLL", "R4", "R3", "R2"]
+end
+
+def get_cmp_tokens
+  ["CMP", "R7", "R0"]
+end
+
+def get_jr_tokens
+  ["JR", "R3"]
+end
