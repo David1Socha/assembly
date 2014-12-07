@@ -9,6 +9,7 @@ module Assembly
   DEFAULT_COND_NAME = "AL"
   REGISTER_BITS = 4
   CONST_BITS = 20
+  CONST_16_BITS = 16
 
   class Assembler
 
@@ -69,8 +70,17 @@ module Assembly
     end
 
     def build_j_instruction(command, tokens)
-      const_dec = tokens.first
-      const = Assembler.to_binary_str(CONST_BITS, const_dec)
+      if (command == "LI")
+        target_reg_dec = tokens[0][1..-1]
+        const_16_dec = tokens[1]
+        target_reg = Assembler.to_binary_str(REGISTER_BITS, target_reg_dec)
+        const_16 = Assembler.to_binary_str(CONST_16_BITS, const_16_dec)
+        const = target_reg + const_16
+      else
+        const_dec = tokens[0]
+        const = Assembler.to_binary_str(CONST_BITS, const_dec)
+      end
+      
       opcode = OPCODES[command]
       j_instr = JInstruction.new(const, opcode, command)
     end
