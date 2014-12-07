@@ -7,6 +7,7 @@ require_relative './b_instruction'
 module Assembly
 
   DEFAULT_COND_NAME = "AL"
+  REGISTER_BITS = 4
 
   class Assembler
 
@@ -38,8 +39,9 @@ module Assembly
       end
     end
 
-    def self.reg_binary(reg_number)
-      format = "%04b" % reg_number
+    def self.to_binary_str(num_bits, decimal)
+      formatter = "%0#{num_bits}b"
+      binary_str = formatter % decimal
     end
 
     def convert_hex(tokens)
@@ -56,9 +58,9 @@ module Assembly
       regT_dec = tokens[0][1..-1]
       regS_dec = tokens[1][1..-1]
       regD_dec = tokens[2][1..-1]
-      regT = Assembler.reg_binary regT_dec
-      regS = Assembler.reg_binary regS_dec
-      regD = Assembler.reg_binary regD_dec
+      regT = Assembler.to_binary_str(REGISTER_BITS, regT_dec)
+      regS = Assembler.to_binary_str(REGISTER_BITS, regS_dec)
+      regD = Assembler.to_binary_str(REGISTER_BITS, regD_dec)
       opx = OPX[command]
       s = S_SET_COMMANDS.include?(command) ? "1" : "0"
       opcode = OPCODES[command]
