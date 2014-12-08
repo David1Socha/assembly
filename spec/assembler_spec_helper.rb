@@ -1,5 +1,5 @@
 def get_sample_lines
-  "Add r2, r0, r4\nj 56\njal 56\nli r4, 5\nAND r5, r7, r9\nXOR r5, r7, r9\nOR r5, r7, r9\nSLL R4, R3, R2\nCMP r7 r0\njr r3"
+  "Add r2, r0, r4\nj 56\njal 56\nli r4, 5\nAND r5, r7, r9\nXOR r5, r7, r9\nOR r5, r7, r9\nSLL R4, R3, R2\nCMP r7 r0\njr r3\nlw r2 (-4)r6\nsw r2 (-4)r6\naddi r3 r4 -14"
 end
 
 def get_add_tokens
@@ -44,6 +44,18 @@ end
 
 def get_jr_tokens
   ["JR", "R3"]
+end
+
+def get_lw_tokens
+  ["LW", "R2", "-4", "R6"]
+end
+
+def get_sw_tokens
+  ["SW", "R2", "-4", "R6"]
+end
+
+def get_addi_tokens
+  ["ADDI", "R3", "R4", "-14"]
 end
 
 def test_convert_hex(assembler, tokens, expected_hex_form)

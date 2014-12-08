@@ -42,8 +42,15 @@ module Assembly
     end
 
     def self.to_binary_str(num_bits, decimal)
+      negative = decimal.to_i < 0
+      num_bits = num_bits + 2 if negative
       formatter = "%0#{num_bits}b"
       binary_str = formatter % decimal
+      if negative
+        return binary_str[2..-1] #remove leading dots from a negative number
+      else
+        return binary_str
+      end
     end
 
     def convert_hex(tokens)
