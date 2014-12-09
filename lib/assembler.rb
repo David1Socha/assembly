@@ -10,11 +10,23 @@ module Assembly
   REGISTER_BITS = 4
   CONST_BITS = 20
   CONST_16_BITS = 16
+  DEFAULT_WIDTH = "24"
+  DEFAULT_DEPTH = "1024"
+  DEFAULT_ADDR_RADIX = "UNS"
+  DEFAULT_DATA_RADIX = "HEX"
 
   class Assembler
 
     def initialize(source_lines)
       @source_lines = source_lines
+    end
+
+    def get_mif_header(width = DEFAULT_WIDTH, depth=DEFAULT_DEPTH, address_radix=DEFAULT_ADDR_RADIX, data_radix=DEFAULT_DATA_RADIX)
+      "WIDTH=#{width};\nDEPTH=#{depth};\n\nADDRESS_RADIX=#{address_radix};\nDATA_RADIX=#{data_radix};\n\nCONTENT BEGIN\n"
+    end
+
+    def get_mif_footer
+      "END;\n"
     end
 
     def tokenize_lines
