@@ -1,5 +1,13 @@
 def get_sample_lines
-  "Add r2, r0, r4\nj 56\njal 56\nli r4, 5\nAND r5, r7, r9\nXOR r5, r7, r9\nOR r5, r7, r9\nSLL R4, R3, R2\nCMP r7 r0\njr r3\nlw r2 (-4)r6\nsw r2 (-4)r6\naddi r3 r4 -14"
+  "Add r2, r0, r4\nj 56\njal 56\nli r4, 5\nAND r5, r7, r9\nXOR r5, r7, r9\nOR r5, r7, r9\nSLL R4, R3, R2\nCMP r7 r0\njr r3\nlw r2 (-4)r6\nsw r2 (-4)r6\naddi r3 r4 -14\nb 15\nbal 15\n"
+end
+
+def get_b_tokens
+  ["B", "15"]
+end
+
+def get_bal_tokens
+  ["BAL", "15"]
 end
 
 def get_add_tokens
