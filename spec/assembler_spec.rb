@@ -156,6 +156,9 @@ describe "Assembler" do
         test_convert_binary(@assembler, get_addnv_tokens, "001000000100011000011100")
       end
 
+      it "correctly adds EQ cond in binary" do
+        test_convert_binary(@assembler, get_addeq_tokens, "001000000100011000101100")
+      end
     end
 
   end
