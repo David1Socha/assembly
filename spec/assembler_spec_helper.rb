@@ -82,11 +82,6 @@ def get_adds_tokens
   ["ADD$", "R2", "R0", "R4"]
 end
 
-def test_convert_hex(assembler, tokens, expected_hex_form)
-  hex_form = assembler.convert_hex tokens
-  expect(hex_form).to eq(expected_hex_form)
-end
-
 def test_convert_binary(assembler, tokens, expected_binary_form)
   binary_form = assembler.convert_binary tokens
   expect(binary_form).to eq(expected_binary_form)
