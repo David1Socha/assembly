@@ -142,6 +142,14 @@ describe "Assembler" do
 
     end
 
+    describe "(Instruction Extensions)" do
+
+      it "If dollar sign is appended to command, sets S bit in binary" do
+        test_convert_hex(@assembler, get_adds_tokens, "001000000100011100001100")
+      end
+
+    end
+
   end
 
   describe "#convert_hex" do
@@ -222,6 +230,14 @@ describe "Assembler" do
 
       it "correctly converts branch and link tokens into hex" do
         test_convert_hex(@assembler, get_bal_tokens, "000f05")
+      end
+
+    end
+
+    describe "(Instruction Extensions)" do
+
+      it "If dollar sign is appended to command, sets S bit in hex" do
+        test_convert_hex(@assembler, get_adds_tokens, "20470c")
       end
 
     end
