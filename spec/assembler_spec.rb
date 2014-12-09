@@ -176,6 +176,10 @@ describe "Assembler" do
         test_convert_binary(@assembler, get_addmi_tokens, "001000000100011001101100")
       end
 
+      it "correctly adds PL cond in binary" do
+        test_convert_binary(@assembler, get_addpl_tokens, "001000000100011001111100")
+      end
+
     end
 
   end
