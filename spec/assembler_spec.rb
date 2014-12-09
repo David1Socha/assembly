@@ -188,6 +188,10 @@ describe "Assembler" do
         test_convert_binary(@assembler, get_addcc_tokens, "001000000100011010011100")
       end
 
+      it "correctly adds HI cond in binary" do
+        test_convert_binary(@assembler, get_addhi_tokens, "001000000100011010101100")
+      end
+
     end
 
   end
