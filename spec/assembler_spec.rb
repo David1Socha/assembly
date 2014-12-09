@@ -137,7 +137,7 @@ describe "Assembler" do
       end
 
       it "correctly converts branch and link tokens into binary" do
-        test_convert_binary(@assembler, get_bal_tokens, "000000000000111100000100")
+        test_convert_binary(@assembler, get_bal_tokens, "000000000000111100000101")
       end
 
     end
