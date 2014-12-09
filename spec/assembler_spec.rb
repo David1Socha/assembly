@@ -200,6 +200,9 @@ describe "Assembler" do
         test_convert_binary(@assembler, get_addgt_tokens, "001000000100011011001100")
       end
 
+      it "correctly adds LT cond in binary" do
+        test_convert_binary(@assembler, get_addlt_tokens, "001000000100011011011100")
+      end
 
     end
 
