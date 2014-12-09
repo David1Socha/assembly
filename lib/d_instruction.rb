@@ -6,7 +6,13 @@ module Assembly
   class DInstruction < Instruction
     attr_accessor :cond, :opcode, :regT, :regS, :s, :immediate, :command
 
-    def initialize(command)
+    def initialize(cond, opcode, regT, regS, s, immediate, command)
+      @cond = cond
+      @opcode = opcode
+      @regT = regT
+      @regS = regS
+      @s = s
+      @immediate = immediate
       @command = command
     end
 
@@ -15,7 +21,7 @@ module Assembly
     end
 
     def to_binary
-      return "000000000000000000000000"
+      return [regT, regS, immediate, s, cond, opcode].join
     end
 
   end

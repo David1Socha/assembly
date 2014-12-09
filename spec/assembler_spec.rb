@@ -15,6 +15,18 @@ describe "Assembler" do
       expect(tokens).to eq ["ADDI", "R2", "R0", "123"]
     end
 
+    it "correctly tokenizes a right paren-separated instruction" do
+      rp_instr = "ADDI)R2)R0)123"
+      tokens = Assembly::Assembler.tokenize rp_instr
+      expect(tokens).to eq ["ADDI", "R2", "R0", "123"]
+    end
+
+    it "correctly tokenizes a left paren-separated instruction" do
+      lp_instr = "ADDI(R2(R0(123"
+      tokens = Assembly::Assembler.tokenize lp_instr
+      expect(tokens).to eq ["ADDI", "R2", "R0", "123"]
+    end
+
     it "correctly tokenizes a tab-separated instruction" do
       tab_separated_instr = "ADDI\tR5\tR7\t99"
       tokens = Assembly::Assembler.tokenize tab_separated_instr
@@ -33,8 +45,8 @@ describe "Assembler" do
       expect(tokens).to eq ["SUB", "R3", "R2", "R3"]
     end
 
-    it "correctly tokenizes an instruction separated by a combination of spaces, commas, and tabs" do
-      instr = "SUB R3,R2\tR3"
+    it "correctly tokenizes an instruction separated by a combination of spaces, commas, parens, and tabs" do
+      instr = "SUB R3,R2\t(R3)"
       tokens = Assembly::Assembler.tokenize instr
       expect(tokens).to eq ["SUB", "R3", "R2", "R3"]
     end
@@ -101,6 +113,23 @@ describe "Assembler" do
 
     end
 
+
+    describe "(D type)" do
+
+      it "correctly converts addi tokens into binary" do
+        test_convert_binary(@assembler, get_addi_tokens, "001101001110010000001010")
+      end
+
+      it "correctly converts load word tokens into binary" do
+        test_convert_binary(@assembler, get_lw_tokens, "001001101111100000001000")
+      end
+
+      it "correctly converts store word tokens into binary" do
+        test_convert_binary(@assembler, get_sw_tokens, "001001101111100000001001")
+      end
+
+    end
+
   end
 
   describe "#convert_hex" do
@@ -153,6 +182,22 @@ describe "Assembler" do
 
       it "correctly converts load immediate tokens into hex" do
         test_convert_hex(@assembler, get_loadi_tokens, "400052")
+      end
+
+    end
+
+    describe "(D type)" do
+
+      it "correctly converts addi tokens into hex" do
+        test_convert_hex(@assembler, get_addi_tokens, "34e40a")
+      end
+
+      it "correctly converts load word tokens into hex" do
+        test_convert_hex(@assembler, get_lw_tokens, "26f808")
+      end
+
+      it "correctly converts store word tokens into hex" do
+        test_convert_hex(@assembler, get_sw_tokens, "26f809")
       end
 
     end

@@ -10,11 +10,24 @@ module Assembly
   REGISTER_BITS = 4
   CONST_BITS = 20
   CONST_16_BITS = 16
+  DTYPE_IMMED_BITS = 7
+  DEFAULT_WIDTH = "24"
+  DEFAULT_DEPTH = "1024"
+  DEFAULT_ADDR_RADIX = "UNS"
+  DEFAULT_DATA_RADIX = "HEX"
 
   class Assembler
 
     def initialize(source_lines)
       @source_lines = source_lines
+    end
+
+    def get_mif_header(width = DEFAULT_WIDTH, depth=DEFAULT_DEPTH, address_radix=DEFAULT_ADDR_RADIX, data_radix=DEFAULT_DATA_RADIX)
+      "WIDTH=#{width};\nDEPTH=#{depth};\n\nADDRESS_RADIX=#{address_radix};\nDATA_RADIX=#{data_radix};\n\nCONTENT BEGIN\n"
+    end
+
+    def get_mif_footer
+      "END;\n"
     end
 
     def tokenize_lines
@@ -24,7 +37,7 @@ module Assembly
     end
 
     def self.tokenize(line)
-      line.upcase.tr_s("\\\t ",',').split(',').delete_if(&:empty?)
+      line.upcase.tr_s("\\\t ()",',').split(',').delete_if(&:empty?)
     end
 
     def self.determine_type_cond(command)
@@ -42,8 +55,15 @@ module Assembly
     end
 
     def self.to_binary_str(num_bits, decimal)
+      negative = decimal.to_i < 0
+      num_bits = num_bits + 2 if negative
       formatter = "%0#{num_bits}b"
       binary_str = formatter % decimal
+      if negative
+        return binary_str[2..-1] #remove leading dots from a negative number
+      else
+        return binary_str
+      end
     end
 
     def convert_hex(tokens)
@@ -94,6 +114,23 @@ module Assembly
       j_instr = JInstruction.new(const, opcode, command)
     end
 
+    def build_d_instruction(command, cond, tokens)
+      regT_dec = tokens[1][1..-1]
+      unless (command == "ADDI")
+        immed_dec = tokens[2]
+        regS_dec = tokens[3][1..-1]
+      else
+        regS_dec = tokens[2][1..-1]
+        immed_dec = tokens[3]
+      end
+      regT = Assembler.to_binary_str(REGISTER_BITS, regT_dec)
+      regS = Assembler.to_binary_str(REGISTER_BITS, regS_dec)
+      immed = Assembler.to_binary_str(DTYPE_IMMED_BITS, immed_dec)
+      s = S_SET_COMMANDS.include?(command) ? "1" : "0"
+      opcode = OPCODES[command]
+      d_instr = DInstruction.new(cond, opcode, regT, regS, s, immed, command)
+    end
+
     def build_instruction(tokens)
       command = tokens[0]
       type, cond, command = Assembler.determine_type_cond command
@@ -101,7 +138,7 @@ module Assembly
       when :R
         instruction = build_r_instruction(command, cond, tokens)
       when :D
-        instruction = DInstruction.new(command, cond)
+        instruction = build_d_instruction(command, cond, tokens)
       when :B
         instruction = BInstruction.new(command, cond)
       when :J
