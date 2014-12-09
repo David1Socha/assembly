@@ -15,6 +15,7 @@ module Assembly
   DEFAULT_DEPTH = "1024"
   DEFAULT_ADDR_RADIX = "UNS"
   DEFAULT_DATA_RADIX = "HEX"
+  LABEL_BITS = 16
 
   class Assembler
 
@@ -93,7 +94,7 @@ module Assembly
       regS = Assembler.to_binary_str(REGISTER_BITS, regS_dec)
       regD = Assembler.to_binary_str(REGISTER_BITS, regD_dec)
       opx = OPX[command]
-      s = S_SET_COMMANDS.include?(command) ? "1" : "0"
+      s = S_ALWAYS_SET_COMMANDS.include?(command) ? "1" : "0"
       opcode = OPCODES[command]
       r_instr = RInstruction.new(regT, regS, regD, opx, s, cond, opcode, command)
     end
@@ -126,9 +127,16 @@ module Assembly
       regT = Assembler.to_binary_str(REGISTER_BITS, regT_dec)
       regS = Assembler.to_binary_str(REGISTER_BITS, regS_dec)
       immed = Assembler.to_binary_str(DTYPE_IMMED_BITS, immed_dec)
-      s = S_SET_COMMANDS.include?(command) ? "1" : "0"
+      s = S_ALWAYS_SET_COMMANDS.include?(command) ? "1" : "0"
       opcode = OPCODES[command]
       d_instr = DInstruction.new(cond, opcode, regT, regS, s, immed, command)
+    end
+
+    def build_b_instruction(command, cond, tokens)
+      label_dec = tokens[1]
+      label = Assembler.to_binary_str(LABEL_BITS, label_dec)
+      opcode = OPCODES[command]
+      b_instr = BInstruction.new(cond, opcode, label, command)
     end
 
     def build_instruction(tokens)
@@ -140,7 +148,7 @@ module Assembly
       when :D
         instruction = build_d_instruction(command, cond, tokens)
       when :B
-        instruction = BInstruction.new(command, cond)
+        instruction = build_b_instruction(command, cond, tokens)
       when :J
         instruction = build_j_instruction(command, tokens)
       end

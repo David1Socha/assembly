@@ -130,6 +130,18 @@ describe "Assembler" do
 
     end
 
+    describe "(B type)" do
+
+      it "correctly converts branch tokens into binary" do
+        test_convert_binary(@assembler, get_b_tokens, "000000000000111100000100")
+      end
+
+      it "correctly converts branch and link tokens into binary" do
+        test_convert_binary(@assembler, get_bal_tokens, "000000000000111100000101")
+      end
+
+    end
+
   end
 
   describe "#convert_hex" do
@@ -198,6 +210,18 @@ describe "Assembler" do
 
       it "correctly converts store word tokens into hex" do
         test_convert_hex(@assembler, get_sw_tokens, "26f809")
+      end
+
+    end
+
+    describe "(B type)" do
+
+      it "correctly converts branch tokens into hex" do
+        test_convert_hex(@assembler, get_b_tokens, "000f04")
+      end
+
+      it "correctly converts branch and link tokens into hex" do
+        test_convert_hex(@assembler, get_bal_tokens, "000f05")
       end
 
     end
