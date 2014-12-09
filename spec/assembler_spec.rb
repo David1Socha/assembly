@@ -184,6 +184,10 @@ describe "Assembler" do
         test_convert_binary(@assembler, get_addcs_tokens, "001000000100011010001100")
       end
 
+      it "correctly adds CC cond in binary" do
+        test_convert_binary(@assembler, get_addcc_tokens, "001000000100011010011100")
+      end
+
     end
 
   end
