@@ -24,7 +24,7 @@ module Assembly
     end
 
     def self.tokenize(line)
-      line.upcase.tr_s("\\\t ",',').split(',').delete_if(&:empty?)
+      line.upcase.tr_s("\\\t ()",',').split(',').delete_if(&:empty?)
     end
 
     def self.determine_type_cond(command)

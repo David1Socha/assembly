@@ -15,6 +15,18 @@ describe "Assembler" do
       expect(tokens).to eq ["ADDI", "R2", "R0", "123"]
     end
 
+    it "correctly tokenizes a right paren-separated instruction" do
+      rp_instr = "ADDI)R2)R0)123"
+      tokens = Assembly::Assembler.tokenize rp_instr
+      expect(tokens).to eq ["ADDI", "R2", "R0", "123"]
+    end
+
+    it "correctly tokenizes a left paren-separated instruction" do
+      lp_instr = "ADDI(R2(R0(123"
+      tokens = Assembly::Assembler.tokenize lp_instr
+      expect(tokens).to eq ["ADDI", "R2", "R0", "123"]
+    end
+
     it "correctly tokenizes a tab-separated instruction" do
       tab_separated_instr = "ADDI\tR5\tR7\t99"
       tokens = Assembly::Assembler.tokenize tab_separated_instr
@@ -33,8 +45,8 @@ describe "Assembler" do
       expect(tokens).to eq ["SUB", "R3", "R2", "R3"]
     end
 
-    it "correctly tokenizes an instruction separated by a combination of spaces, commas, and tabs" do
-      instr = "SUB R3,R2\tR3"
+    it "correctly tokenizes an instruction separated by a combination of spaces, commas, parens, and tabs" do
+      instr = "SUB R3,R2\t(R3)"
       tokens = Assembly::Assembler.tokenize instr
       expect(tokens).to eq ["SUB", "R3", "R2", "R3"]
     end
