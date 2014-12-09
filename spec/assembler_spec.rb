@@ -145,7 +145,7 @@ describe "Assembler" do
     describe "(Instruction Extensions)" do
 
       it "If dollar sign is appended to command, sets S bit in binary" do
-        test_convert_hex(@assembler, get_adds_tokens, "001000000100011100001100")
+        test_convert_binary(@assembler, get_adds_tokens, "001000000100011100001100")
       end
 
     end
