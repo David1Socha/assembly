@@ -148,6 +148,10 @@ describe "Assembler" do
         test_convert_binary(@assembler, get_adds_tokens, "001000000100011100001100")
       end
 
+      it "correctly adds AL cond in binary" do
+        test_convert_binary(@assembler, get_addal_tokens, "001000000100011000001100")
+      end
+
     end
 
   end
@@ -238,6 +242,10 @@ describe "Assembler" do
 
       it "If dollar sign is appended to command, sets S bit in hex" do
         test_convert_hex(@assembler, get_adds_tokens, "20470c")
+      end
+
+      it "correctly adds AL cond in hex" do
+        test_convert_hex(@assembler, get_addal_tokens, "20460c")
       end
 
     end
