@@ -208,6 +208,10 @@ describe "Assembler" do
         test_convert_binary(@assembler, get_addge_tokens, "001000000100011011101100")
       end
 
+      it "correctly adds LE cond in binary" do
+        test_convert_binary(@assembler, get_addle_tokens, "001000000100011011111100")
+      end
+
     end
 
   end
