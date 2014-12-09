@@ -3,6 +3,6 @@ module Assembly
   CONDS = {"AL" => "0000", "NV" => "0001", "EQ" => "0010", "NE" => "0011", "VS" => "0100", "VC" => "0101", "MI" => "0110", "PL" => "0111", "CS" => "1000", "CC" => "1001", "HI" => "1010", "LS" => "1011", "GT" => "1100", "LT" => "1101", "GE" => "1110", "LE" => "1111"}
   DEFAULT_COND = "0000"
   OPX = {"ADD" => "011", "SUB" => "100", "AND" => "000", "OR" => "001", "XOR" => "010", "SLL" => "000", "CMP" => "000", "JR" => "000"}
-  TYPES = {"ADD" => :R, "SUB" => :R, "AND" => :R, "OR" => :R, "XOR" => :R, "SLL" => :R, "CMP" => :R, "JR" => :R, "J" => :J, "JAL" => :J, "LI" => :J, "LW" => :D, "SW" => :D, "ADDI" => :D, "SI" => :D}
+  TYPES = {"ADD" => :R, "SUB" => :R, "AND" => :R, "OR" => :R, "XOR" => :R, "SLL" => :R, "CMP" => :R, "JR" => :R, "J" => :J, "JAL" => :J, "LI" => :J, "LW" => :D, "SW" => :D, "ADDI" => :D, "SI" => :D, "B" => :B, "BAL" => :B}
   S_ALWAYS_SET_COMMANDS = ["CMP"]
 end
