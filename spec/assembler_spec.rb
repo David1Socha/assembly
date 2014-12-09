@@ -172,6 +172,10 @@ describe "Assembler" do
         test_convert_binary(@assembler, get_addvc_tokens, "001000000100011001011100")
       end
 
+      it "correctly adds MI cond in binary" do
+        test_convert_binary(@assembler, get_addmi_tokens, "001000000100011001101100")
+      end
+
     end
 
   end
