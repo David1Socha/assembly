@@ -180,6 +180,10 @@ describe "Assembler" do
         test_convert_binary(@assembler, get_addpl_tokens, "001000000100011001111100")
       end
 
+      it "correctly adds CS cond in binary" do
+        test_convert_binary(@assembler, get_addcs_tokens, "001000000100011010001100")
+      end
+
     end
 
   end
