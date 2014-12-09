@@ -152,6 +152,10 @@ describe "Assembler" do
         test_convert_binary(@assembler, get_addal_tokens, "001000000100011000001100")
       end
 
+      it "correctly adds NV cond in binary" do
+        test_convert_binary(@assembler, get_addnv_tokens, "001000000100011000011100")
+      end
+
     end
 
   end
@@ -246,6 +250,10 @@ describe "Assembler" do
 
       it "correctly adds AL cond in hex" do
         test_convert_hex(@assembler, get_addal_tokens, "20460c")
+      end
+
+      it "correctly adds NV cond in hex" do
+        test_convert_hex(@assembler, get_addnv_tokens, "20461c")
       end
 
     end
