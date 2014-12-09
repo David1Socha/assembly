@@ -6,16 +6,19 @@ module Assembly
   class BInstruction < Instruction
     attr_accessor :cond, :opcode, :label, :command
 
-    def initialize(command)
+    def initialize(cond, opcode, label, command)
+      @cond = cond
+      @opcode = opcode
+      @label = label
       @command = command
     end
 
     def self.type
-      return :R
+      return :B
     end
 
     def to_binary
-      return "000000000000000000000000"
+      return [label, cond, opcode].join
     end
 
   end
