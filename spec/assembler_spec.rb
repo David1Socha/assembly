@@ -202,5 +202,17 @@ describe "Assembler" do
 
     end
 
+    describe "(B type)" do
+
+      it "correctly converts branch tokens into hex" do
+        test_convert_hex(@assembler, get_b_tokens, "000f04")
+      end
+
+      it "correctly converts branch and link tokens into hex" do
+        test_convert_hex(@assembler, get_bal_tokens, "000f05")
+      end
+
+    end
+
   end
 end
