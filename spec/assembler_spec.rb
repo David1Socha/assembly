@@ -113,6 +113,23 @@ describe "Assembler" do
 
     end
 
+
+    describe "(D type)" do
+
+      it "correctly converts addi tokens into binary" do
+        test_convert_binary(@assembler, get_addi_tokens, "001101001110010000001010")
+      end
+
+      it "correctly converts load word tokens into binary" do
+        test_convert_binary(@assembler, get_lw_tokens, "001001101111100000001000")
+      end
+
+      it "correctly converts store word tokens into binary" do
+        test_convert_binary(@assembler, get_sw_tokens, "001001101111100000001001")
+      end
+
+    end
+
   end
 
   describe "#convert_hex" do
@@ -180,7 +197,7 @@ describe "Assembler" do
       end
 
       it "correctly converts store word tokens into hex" do
-        test_convert_hex(@assembler, get_lw_tokens, "26f809")
+        test_convert_hex(@assembler, get_sw_tokens, "26f809")
       end
 
     end
