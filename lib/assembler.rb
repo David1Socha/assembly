@@ -93,7 +93,7 @@ module Assembly
       regS = Assembler.to_binary_str(REGISTER_BITS, regS_dec)
       regD = Assembler.to_binary_str(REGISTER_BITS, regD_dec)
       opx = OPX[command]
-      s = S_SET_COMMANDS.include?(command) ? "1" : "0"
+      s = S_ALWAYS_SET_COMMANDS.include?(command) ? "1" : "0"
       opcode = OPCODES[command]
       r_instr = RInstruction.new(regT, regS, regD, opx, s, cond, opcode, command)
     end
@@ -126,7 +126,7 @@ module Assembly
       regT = Assembler.to_binary_str(REGISTER_BITS, regT_dec)
       regS = Assembler.to_binary_str(REGISTER_BITS, regS_dec)
       immed = Assembler.to_binary_str(DTYPE_IMMED_BITS, immed_dec)
-      s = S_SET_COMMANDS.include?(command) ? "1" : "0"
+      s = S_ALWAYS_SET_COMMANDS.include?(command) ? "1" : "0"
       opcode = OPCODES[command]
       d_instr = DInstruction.new(cond, opcode, regT, regS, s, immed, command)
     end
