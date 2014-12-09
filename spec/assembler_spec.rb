@@ -164,6 +164,10 @@ describe "Assembler" do
         test_convert_binary(@assembler, get_addne_tokens, "001000000100011000111100")
       end
 
+      it "correctly adds VS cond in binary" do
+        test_convert_binary(@assembler, get_addvs_tokens, "001000000100011001001100")
+      end
+
     end
 
   end
