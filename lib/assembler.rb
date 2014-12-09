@@ -41,17 +41,23 @@ module Assembly
       line.upcase.tr_s("\\\t ()",',').split(',').delete_if(&:empty?)
     end
 
-    def self.determine_type_cond(command)
+    def self.trim_extensions(command)
+      if command[-1] == "$" #dollar sign is our shortcut for s bit being set
+        command = command[0...-1]
+        s = "1"
+      else
+        s = (S_ALWAYS_SET_COMMANDS.include?(command) || S_ALWAYS_SET_COMMANDS.include?(command[0...-2])) ? "1" : "0"
+      end
       type = TYPES[command]
       unless type.nil?
         cond = CONDS[DEFAULT_COND_NAME]
-        return type, cond, command
+        return type, cond, command, s
       else
         cond_name = command[-2..-1]
         command = command[0...-2]
         type = TYPES[command]
         cond =CONDS[cond_name]
-        return type, cond, command
+        return type, cond, command, s
       end
     end
 
@@ -77,7 +83,7 @@ module Assembly
       instr.to_binary
     end
 
-    def build_r_instruction(command, cond, tokens)
+    def build_r_instruction(command, cond, s, tokens)
       if (command == "JR")
         regT_dec = "0"
         regS_dec = tokens[1][1..-1]
@@ -94,7 +100,6 @@ module Assembly
       regS = Assembler.to_binary_str(REGISTER_BITS, regS_dec)
       regD = Assembler.to_binary_str(REGISTER_BITS, regD_dec)
       opx = OPX[command]
-      s = S_ALWAYS_SET_COMMANDS.include?(command) ? "1" : "0"
       opcode = OPCODES[command]
       r_instr = RInstruction.new(regT, regS, regD, opx, s, cond, opcode, command)
     end
@@ -115,7 +120,7 @@ module Assembly
       j_instr = JInstruction.new(const, opcode, command)
     end
 
-    def build_d_instruction(command, cond, tokens)
+    def build_d_instruction(command, cond, s, tokens)
       regT_dec = tokens[1][1..-1]
       unless (command == "ADDI")
         immed_dec = tokens[2]
@@ -127,7 +132,6 @@ module Assembly
       regT = Assembler.to_binary_str(REGISTER_BITS, regT_dec)
       regS = Assembler.to_binary_str(REGISTER_BITS, regS_dec)
       immed = Assembler.to_binary_str(DTYPE_IMMED_BITS, immed_dec)
-      s = S_ALWAYS_SET_COMMANDS.include?(command) ? "1" : "0"
       opcode = OPCODES[command]
       d_instr = DInstruction.new(cond, opcode, regT, regS, s, immed, command)
     end
@@ -141,12 +145,12 @@ module Assembly
 
     def build_instruction(tokens)
       command = tokens[0]
-      type, cond, command = Assembler.determine_type_cond command
+      type, cond, command, s = Assembler.trim_extensions command
       case type
       when :R
-        instruction = build_r_instruction(command, cond, tokens)
+        instruction = build_r_instruction(command, cond, s, tokens)
       when :D
-        instruction = build_d_instruction(command, cond, tokens)
+        instruction = build_d_instruction(command, cond, s, tokens)
       when :B
         instruction = build_b_instruction(command, cond, tokens)
       when :J

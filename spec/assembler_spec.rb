@@ -142,86 +142,74 @@ describe "Assembler" do
 
     end
 
-  end
+    describe "(Instruction Extensions)" do
 
-  describe "#convert_hex" do
-
-    describe "(R type)" do
-
-      it "correctly converts add tokens into hex" do
-        test_convert_hex(@assembler, get_add_tokens, "20460c")
+      it "correctly adds S bit in binary" do
+        test_convert_binary(@assembler, get_adds_tokens, "001000000100011100001100")
       end
 
-      it "correctly converts sub tokens into hex" do
-        test_convert_hex(@assembler, get_sub_tokens, "22280c")
+      it "correctly adds AL cond in binary" do
+        test_convert_binary(@assembler, get_addal_tokens, "001000000100011000001100")
       end
 
-      it "correctly converts add tokens into hex" do
-        test_convert_hex(@assembler, get_and_tokens, "57900c")
+      it "correctly adds NV cond in binary" do
+        test_convert_binary(@assembler, get_addnv_tokens, "001000000100011000011100")
       end
 
-      it "correctly converts xor tokens into hex" do
-        test_convert_hex(@assembler, get_xor_tokens, "57940c")
+      it "correctly adds EQ cond in binary" do
+        test_convert_binary(@assembler, get_addeq_tokens, "001000000100011000101100")
       end
 
-      it "correctly converts or tokens into hex" do
-        test_convert_hex(@assembler, get_or_tokens, "57920c")
+      it "correctly adds NE cond in binary" do
+        test_convert_binary(@assembler, get_addne_tokens, "001000000100011000111100")
       end
 
-      it "correctly converts sll tokens into hex" do
-        test_convert_hex(@assembler, get_sll_tokens, "43200f")
+      it "correctly adds VS cond in binary" do
+        test_convert_binary(@assembler, get_addvs_tokens, "001000000100011001001100")
       end
 
-      it "correctly converts cmp tokens into hex" do
-        test_convert_hex(@assembler, get_cmp_tokens, "70010e")
+      it "correctly adds VC cond in binary" do
+        test_convert_binary(@assembler, get_addvc_tokens, "001000000100011001011100")
       end
 
-      it "correctly converts jr tokens into hex" do
-        test_convert_hex(@assembler, get_jr_tokens, "03000d")
+      it "correctly adds MI cond in binary" do
+        test_convert_binary(@assembler, get_addmi_tokens, "001000000100011001101100")
       end
 
-    end
-
-    describe "(J type)" do
-
-      it "correctly converts jump tokens into hex" do
-        test_convert_hex(@assembler, get_jump_tokens, "000380")
+      it "correctly adds PL cond in binary" do
+        test_convert_binary(@assembler, get_addpl_tokens, "001000000100011001111100")
       end
 
-      it "correctly converts jump and link tokens into hex" do
-        test_convert_hex(@assembler, get_jal_tokens, "000381")
+      it "correctly adds CS cond in binary" do
+        test_convert_binary(@assembler, get_addcs_tokens, "001000000100011010001100")
       end
 
-      it "correctly converts load immediate tokens into hex" do
-        test_convert_hex(@assembler, get_loadi_tokens, "400052")
+      it "correctly adds CC cond in binary" do
+        test_convert_binary(@assembler, get_addcc_tokens, "001000000100011010011100")
       end
 
-    end
-
-    describe "(D type)" do
-
-      it "correctly converts addi tokens into hex" do
-        test_convert_hex(@assembler, get_addi_tokens, "34e40a")
+      it "correctly adds HI cond in binary" do
+        test_convert_binary(@assembler, get_addhi_tokens, "001000000100011010101100")
       end
 
-      it "correctly converts load word tokens into hex" do
-        test_convert_hex(@assembler, get_lw_tokens, "26f808")
+      it "correctly adds LS cond in binary" do
+        test_convert_binary(@assembler, get_addls_tokens, "001000000100011010111100")
       end
 
-      it "correctly converts store word tokens into hex" do
-        test_convert_hex(@assembler, get_sw_tokens, "26f809")
+      it "correctly adds GT cond in binary" do
+        test_convert_binary(@assembler, get_addgt_tokens, "001000000100011011001100")
       end
 
-    end
-
-    describe "(B type)" do
-
-      it "correctly converts branch tokens into hex" do
-        test_convert_hex(@assembler, get_b_tokens, "000f04")
+      it "correctly adds LT cond in binary" do
+        test_convert_binary(@assembler, get_addlt_tokens, "001000000100011011011100")
       end
 
-      it "correctly converts branch and link tokens into hex" do
-        test_convert_hex(@assembler, get_bal_tokens, "000f05")
+      it "correctly adds GE cond in binary" do
+        test_convert_binary(@assembler, get_addge_tokens, "001000000100011011101100")
+      end
+
+      it "correctly adds LE cond in binary" do
+        test_convert_binary(@assembler, get_addle_tokens, "001000000100011011111100")
       end
 
     end
