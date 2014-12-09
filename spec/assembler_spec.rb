@@ -144,7 +144,7 @@ describe "Assembler" do
 
     describe "(Instruction Extensions)" do
 
-      it "If dollar sign is appended to command, sets S bit in binary" do
+      it "if dollar sign is appended to command, sets S bit in binary" do
         test_convert_binary(@assembler, get_adds_tokens, "001000000100011100001100")
       end
 
@@ -159,6 +159,11 @@ describe "Assembler" do
       it "correctly adds EQ cond in binary" do
         test_convert_binary(@assembler, get_addeq_tokens, "001000000100011000101100")
       end
+
+      it "correctly adds NE cond in binary" do
+        test_convert_binary(@assembler, get_addne_tokens, "001000000100011000111100")
+      end
+
     end
 
   end
