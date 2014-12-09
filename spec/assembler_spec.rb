@@ -192,6 +192,10 @@ describe "Assembler" do
         test_convert_binary(@assembler, get_addhi_tokens, "001000000100011010101100")
       end
 
+      it "correctly adds LS cond in binary" do
+        test_convert_binary(@assembler, get_addls_tokens, "001000000100011010111100")
+      end
+
     end
 
   end
