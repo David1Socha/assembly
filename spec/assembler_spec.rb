@@ -169,5 +169,21 @@ describe "Assembler" do
 
     end
 
+    describe "(D type)" do
+
+      it "correctly converts addi tokens into hex" do
+        test_convert_hex(@assembler, get_addi_tokens, "34e40a")
+      end
+
+      it "correctly converts load word tokens into hex" do
+        test_convert_hex(@assembler, get_lw_tokens, "26f808")
+      end
+
+      it "correctly converts store word tokens into hex" do
+        test_convert_hex(@assembler, get_lw_tokens, "26f809")
+      end
+
+    end
+
   end
 end
