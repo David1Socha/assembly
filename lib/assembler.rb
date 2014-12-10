@@ -59,7 +59,7 @@ module Assembly
 
     def self.strip_comment(line)
       comment_index = line.index('--')
-      line = line[0...comment_index]
+      line = comment_index.nil? ? line : line[0...comment_index]
     end
 
     def self.tokenize(line)
