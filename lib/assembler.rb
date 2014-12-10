@@ -19,11 +19,13 @@ module Assembly
 
   class Assembler
 
+    attr_reader :tokenized_lines
+
     def initialize(source_lines)
       @source_lines = source_lines
     end
 
-    def get_mif_header(width = DEFAULT_WIDTH, depth=DEFAULT_DEPTH, address_radix=DEFAULT_ADDR_RADIX, data_radix=DEFAULT_DATA_RADIX)
+    def get_mif_header(width, depth, address_radix, data_radix)
       "WIDTH=#{width};\nDEPTH=#{depth};\n\nADDRESS_RADIX=#{address_radix};\nDATA_RADIX=#{data_radix};\n\nCONTENT BEGIN\n"
     end
 
@@ -31,14 +33,38 @@ module Assembly
       "END;\n"
     end
 
+    def return_mif(width = DEFAULT_WIDTH, depth = DEFAULT_DEPTH, address_radix = DEFAULT_ADDR_RADIX, data_radix = DEFAULT_DATA_RADIX)
+      tokenize_lines
+      mif_lines = Array.new
+      mif_lines << get_mif_header(width, depth, address_radix, data_radix)
+      if (data_radix == "HEX")
+        tokenized_lines.map do |tokens|
+          mif_lines << convert_hex(tokens) 
+        end
+      elsif (data_radix == "BIN")
+        tokenized_lines.map do |tokens|
+          mif_lines << convert_binary(tokens)
+        end
+      end
+      mif_lines << get_mif_footer
+      mif_formatted_text = mif_lines.join
+    end
+
     def tokenize_lines
       @tokenized_lines = @source_lines.map do |line| 
-        tokenize(line) #TODO get label first?
+        uncommented_line = Assembler.strip_comment line
+        Assembler.tokenize(uncommented_line) #TODO get label first?
       end
+      @tokenized_lines.delete_if(&:empty?)
+    end
+
+    def self.strip_comment(line)
+      comment_index = line.index('--')
+      uncommented_line = comment_index.nil? ? line : line[0...comment_index]
     end
 
     def self.tokenize(line)
-      line.upcase.tr_s("\\\t ()",',').split(',').delete_if(&:empty?)
+      line.upcase.tr_s("\\\t\\\n ()",',').split(',').delete_if(&:empty?)
     end
 
     def self.trim_extensions(command)
@@ -75,12 +101,12 @@ module Assembly
 
     def convert_hex(tokens)
       instr = build_instruction tokens
-      instr.to_hex
+      hex_instr = instr.to_hex << "\n"
     end
 
     def convert_binary(tokens)
       instr = build_instruction tokens
-      instr.to_binary
+      binary_instr = instr.to_binary << "\n"
     end
 
     def build_r_instruction(command, cond, s, tokens)

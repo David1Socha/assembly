@@ -2,6 +2,9 @@ require_relative './assembler.rb'
 
 module Assembly
   class Program
+
+    OUTPUT_DIR = "output"
+
     def get_source_file
       @source_file = ARGV.empty? ? prompt_source_file : ARGV.first 
     end
@@ -28,7 +31,13 @@ module Assembly
       get_source_file
       read_source_lines
       get_output_file
-      puts @output_file
+      assembler = Assembly::Assembler.new @source_lines
+      mif = assembler.return_mif
+      Dir.mkdir(OUTPUT_DIR) unless File.exists? OUTPUT_DIR
+      File.open("#{OUTPUT_DIR}/#{@output_file}", "w") do |file|
+        file.print mif
+      end
+      puts "File successfully assembled! Can be found in #{OUTPUT_DIR}/#{@output_file}"
     rescue => e
       puts "Sorry, an error has occured."
       puts e.backtrace
