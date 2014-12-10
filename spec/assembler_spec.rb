@@ -217,12 +217,28 @@ describe "Assembler" do
   end
 
   describe "#return_mif" do
+
     it "converts an array of tokenized lines into a mif-formatted string" do
       assembler = Assembly::Assembler.new ""
       expect(assembler).to receive(:tokenize_lines)
       expect(assembler).to receive(:tokenized_lines).and_return([get_add_tokens,get_jump_tokens])
       expect(assembler.return_mif).to eq "WIDTH=24;\nDEPTH=1024;\n\nADDRESS_RADIX=UNS;\nDATA_RADIX=HEX;\n\nCONTENT BEGIN\n20460c\n000380\nEND;\n"
     end
+
+  end
+
+  describe "#strip_comment" do
+
+    it "does not change a line without comments" do
+      original_line = "Addi r2, \tr0, -4 "
+      expect(Assembly::Assembler.strip_comment original_line).to eq "Addi r2, \tr0, -4 "
+    end
+
+    it "removes comment from a line ending in '--'" do
+      original_line = "Addi r2, \tr0, -4 --Sets r2 to -4"
+      expect(Assembly::Assembler.strip_comment original_line).to eq "Addi r2, \tr0, -4 "
+    end
+
   end
 
 end
