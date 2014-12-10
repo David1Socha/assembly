@@ -52,8 +52,14 @@ module Assembly
 
     def tokenize_lines
       @tokenized_lines = @source_lines.map do |line| 
-        tokenize(line) #TODO get label first?
+        uncommented_line = Assembler.strip_comment line
+        tokenize(uncommented_line) #TODO get label first?
       end
+    end
+
+    def self.strip_comment(line)
+      comment_index = line.index('--')
+      line = line[0...comment_index]
     end
 
     def self.tokenize(line)
