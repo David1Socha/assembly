@@ -28,7 +28,12 @@ module Assembly
       get_source_file
       read_source_lines
       get_output_file
-      puts @output_file
+      assembler = Assembly::Assembler.new @source_lines
+      mif = assembler.return_mif
+      File.open(@output_file, "w") do |file|
+        file.print mif
+      end
+      puts "File successfully assembled! Can be found in output/#{@output_file}"
     rescue => e
       puts "Sorry, an error has occured."
       puts e.backtrace
