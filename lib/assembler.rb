@@ -53,17 +53,18 @@ module Assembly
     def tokenize_lines
       @tokenized_lines = @source_lines.map do |line| 
         uncommented_line = Assembler.strip_comment line
-        tokenize(uncommented_line) #TODO get label first?
+        Assembler.tokenize(uncommented_line) #TODO get label first?
       end
+      @tokenized_lines.delete_if(&:empty?)
     end
 
     def self.strip_comment(line)
       comment_index = line.index('--')
-      line = comment_index.nil? ? line : line[0...comment_index]
+      uncommented_line = comment_index.nil? ? line : line[0...comment_index]
     end
 
     def self.tokenize(line)
-      line.upcase.tr_s("\\\t ()",',').split(',').delete_if(&:empty?)
+      line.upcase.tr_s("\\\t\\\n ()",',').split(',').delete_if(&:empty?)
     end
 
     def self.trim_extensions(command)
