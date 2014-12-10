@@ -2,10 +2,6 @@ require_relative '../lib/assembler'
 require_relative './assembler_spec_helper'
 
 describe "Assembler" do
-  
-  before(:each) do
-    @assembler = Assembly::Assembler.new get_sample_lines
-  end
 
   describe "#tokenize" do
 
@@ -60,6 +56,10 @@ describe "Assembler" do
   end
 
   describe "#convert_binary" do
+
+    before(:each) do
+      @assembler = Assembly::Assembler.new get_sample_lines
+    end
 
     describe "(R type)" do
 
@@ -215,4 +215,14 @@ describe "Assembler" do
     end
 
   end
+
+  describe "#return_mif" do
+    it "converts an array of tokenized lines into a mif-formatted string" do
+      assembler = Assembly::Assembler.new ""
+      expect(assembler).to receive(:tokenize_lines)
+      expect(assembler).to receive(:tokenized_lines).and_return([get_add_tokens,get_jump_tokens])
+      expect(assembler.return_mif).to eq "WIDTH=24;\nDEPTH=1024;\n\nADDRESS_RADIX=UNS;\nDATA_RADIX=HEX;\n\nCONTENT BEGIN\n20460c\n000380\nEND;\n"
+    end
+  end
+
 end
