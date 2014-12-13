@@ -42,7 +42,7 @@ module Assembly
       if (data_radix == "HEX")
         tokenized_lines.map do |tokens|
           hex = convert_hex(tokens).upcase
-          line = "#{counter} : #{hex};\n"
+          line = "\t#{counter} : #{hex};\n"
           counter += 1
           raise "Too many lines" if counter >= depth_i
           mif_lines << line
@@ -50,14 +50,14 @@ module Assembly
       elsif (data_radix == "BIN")
         tokenized_lines.map do |tokens|
           bin = convert_binary(tokens).upcase
-          line = "#{counter} : #{bin};\n"
+          line = "\t#{counter} : #{bin};\n"
           counter += 1
           raise "Too many lines" if counter >= depth_i
           mif_lines << line
         end
       end
       if (counter < depth_i)
-        padding_line = "[#{counter}..#{depth_i-1}] : 000000;\n"
+        padding_line = "\t[#{counter}..#{depth_i-1}] : 000000;\n"
         mif_lines << padding_line
       end
       mif_lines << get_mif_footer
