@@ -222,7 +222,7 @@ describe "Assembler" do
       assembler = Assembly::Assembler.new ""
       expect(assembler).to receive(:tokenize_lines)
       expect(assembler).to receive(:tokenized_lines).and_return([get_add_tokens,get_jump_tokens])
-      expect(assembler.return_mif).to eq "WIDTH=24;\nDEPTH=1024;\n\nADDRESS_RADIX=UNS;\nDATA_RADIX=HEX;\n\nCONTENT BEGIN\n0 : 20460C;\n1 : 000380;\n[2..1023] : 000000;\nEND;\n"
+      expect(assembler.return_mif).to eq "WIDTH=24;\nDEPTH=1024;\n\nADDRESS_RADIX=UNS;\nDATA_RADIX=HEX;\n\nCONTENT BEGIN\n\t0 : 20460C;\n\t1 : 000380;\n\t[2..1023] : 000000;\nEND;\n"
     end
 
   end
