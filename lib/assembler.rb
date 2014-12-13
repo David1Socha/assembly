@@ -37,14 +37,28 @@ module Assembly
       tokenize_lines
       mif_lines = Array.new
       mif_lines << get_mif_header(width, depth, address_radix, data_radix)
+      depth_i = depth.to_i
+      counter = 0
       if (data_radix == "HEX")
         tokenized_lines.map do |tokens|
-          mif_lines << convert_hex(tokens) 
+          hex = convert_hex(tokens).upcase
+          line = "#{counter} : #{hex};\n"
+          counter += 1
+          raise "Too many lines" if counter >= depth_i
+          mif_lines << line
         end
       elsif (data_radix == "BIN")
         tokenized_lines.map do |tokens|
-          mif_lines << convert_binary(tokens)
+          bin = convert_binary(tokens).upcase
+          line = "#{counter} : #{bin};\n"
+          counter += 1
+          raise "Too many lines" if counter >= depth_i
+          mif_lines << line
         end
+      end
+      if (counter < depth_i)
+        padding_line = "[#{counter}..#{depth_i-1}] : 000000;\n"
+        mif_lines << padding_line
       end
       mif_lines << get_mif_footer
       mif_formatted_text = mif_lines.join
@@ -101,12 +115,12 @@ module Assembly
 
     def convert_hex(tokens)
       instr = build_instruction tokens
-      hex_instr = instr.to_hex << "\n"
+      hex_instr = instr.to_hex
     end
 
     def convert_binary(tokens)
       instr = build_instruction tokens
-      binary_instr = instr.to_binary << "\n"
+      binary_instr = instr.to_binary
     end
 
     def build_r_instruction(command, cond, s, tokens)
