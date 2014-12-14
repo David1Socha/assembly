@@ -19,7 +19,7 @@ module Assembly
 
   class Assembler
 
-    attr_reader :tokenized_lines
+    attr_reader :tokenized_lines, :labels
 
     def initialize(source_lines)
       @source_lines = source_lines
@@ -35,7 +35,7 @@ module Assembly
     end
 
     def get_label_absolute(label)
-      label_abs = @labels[label]
+      label_abs = labels[label]
     end
 
     def return_mif(width = DEFAULT_WIDTH, depth = DEFAULT_DEPTH, address_radix = DEFAULT_ADDR_RADIX, data_radix = DEFAULT_DATA_RADIX)
@@ -199,7 +199,7 @@ module Assembly
     end
 
     def get_label_relative(current_index, label)
-      label_index = @labels[label]
+      label_index = labels[label]
       relative_dist = label_index - current_index - 1
       return relative_dist.to_s
     end
