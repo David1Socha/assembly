@@ -70,7 +70,7 @@ module Assembly
     end
 
     def save_labels
-      @tokenized_lines.each_with_index do |tokens, i|
+      tokenized_lines.each_with_index do |tokens, i|
         first_token = tokens.first
         if first_token.include? ":" #if line has label
           @labels[first_token] = i #save label in map
@@ -168,9 +168,9 @@ module Assembly
         const = target_reg + const_16
       else
         jump_target = tokens[1]
-        if jump_target.is_a? String
+        if jump_target.to_i.to_s != jump_target #token is a string
           const_dec = get_label_absolute(jump_target)
-        else
+        else #token is already a number
           const_dec = jump_target
         end
         const = Assembler.to_binary_str(CONST_BITS, const_dec)
