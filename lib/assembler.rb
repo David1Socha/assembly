@@ -35,6 +35,7 @@ module Assembly
 
     def return_mif(width = DEFAULT_WIDTH, depth = DEFAULT_DEPTH, address_radix = DEFAULT_ADDR_RADIX, data_radix = DEFAULT_DATA_RADIX)
       tokenize_lines
+      save_labels
       mif_lines = Array.new
       mif_lines << get_mif_header(width, depth, address_radix, data_radix)
       depth_i = depth.to_i
@@ -64,10 +65,19 @@ module Assembly
       mif_formatted_text = mif_lines.join
     end
 
+    def save_labels
+      @tokenized_lines.each_with_index do |tokens, i|
+        first_token = tokens.first
+        if first_token.include? ":" #if line has label
+          @labels[first_token] = i
+        end
+      end
+    end
+
     def tokenize_lines
       @tokenized_lines = @source_lines.map do |line| 
         uncommented_line = Assembler.strip_comment line
-        Assembler.tokenize(uncommented_line) #TODO get label first?
+        Assembler.tokenize(uncommented_line)
       end
       @tokenized_lines.delete_if(&:empty?)
     end
