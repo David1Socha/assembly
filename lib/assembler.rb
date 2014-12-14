@@ -46,16 +46,16 @@ module Assembly
       depth_i = depth.to_i
       counter = 0
       if (data_radix == "HEX")
-        tokenized_lines.map do |tokens|
-          hex = convert_hex(tokens).upcase
+        tokenized_lines.each_with_index do |tokens, i|
+          hex = convert_hex(tokens, i).upcase
           line = "\t#{counter} : #{hex};\n"
           counter += 1
           raise "Too many lines" if counter >= depth_i
           mif_lines << line
         end
       elsif (data_radix == "BIN")
-        tokenized_lines.map do |tokens|
-          bin = convert_binary(tokens).upcase
+        tokenized_lines.each_with_index do |tokens, i|
+          bin = convert_binary(tokens, i).upcase
           line = "\t#{counter} : #{bin};\n"
           counter += 1
           raise "Too many lines" if counter >= depth_i
@@ -130,13 +130,13 @@ module Assembly
       end
     end
 
-    def convert_hex(tokens)
-      instr = build_instruction tokens
+    def convert_hex(tokens, current_instruction = 0)
+      instr = build_instruction(tokens, current_instruction)
       hex_instr = instr.to_hex
     end
 
-    def convert_binary(tokens)
-      instr = build_instruction tokens
+    def convert_binary(tokens, current_instruction = 0)
+      instr = build_instruction(tokens, current_instruction)
       binary_instr = instr.to_binary
     end
 
@@ -198,14 +198,21 @@ module Assembly
       d_instr = DInstruction.new(cond, opcode, regT, regS, s, immed, command)
     end
 
-    def build_b_instruction(command, cond, tokens)
+    def get_label_relative(current_instruction, label)
+      #todo
+    end
+
+    def build_b_instruction(command, cond, tokens, current_instruction)
       label_dec = tokens[1]
+      if label_dec.to_i.to_s != label_dec #label is string
+        label_dec = get_label_relative(current_instruction, label_dec)
+      end
       label = Assembler.to_binary_str(LABEL_BITS, label_dec)
       opcode = OPCODES[command]
       b_instr = BInstruction.new(cond, opcode, label, command)
     end
 
-    def build_instruction(tokens)
+    def build_instruction(tokens, current_instruction)
       command = tokens[0]
       type, cond, command, s = Assembler.trim_extensions command
       case type
@@ -214,7 +221,7 @@ module Assembly
       when :D
         instruction = build_d_instruction(command, cond, s, tokens)
       when :B
-        instruction = build_b_instruction(command, cond, tokens)
+        instruction = build_b_instruction(command, cond, tokens, current_instruction)
       when :J
         instruction = build_j_instruction(command, tokens)
       end
