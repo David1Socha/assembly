@@ -33,6 +33,10 @@ module Assembly
       "END;\n"
     end
 
+    def get_label_absolute(label)
+      label_abs = @labels[label]
+    end
+
     def return_mif(width = DEFAULT_WIDTH, depth = DEFAULT_DEPTH, address_radix = DEFAULT_ADDR_RADIX, data_radix = DEFAULT_DATA_RADIX)
       tokenize_lines
       save_labels
@@ -69,7 +73,8 @@ module Assembly
       @tokenized_lines.each_with_index do |tokens, i|
         first_token = tokens.first
         if first_token.include? ":" #if line has label
-          @labels[first_token] = i
+          @labels[first_token] = i #save label in map
+          tokens.shift #remove label from tokens
         end
       end
     end
@@ -162,7 +167,12 @@ module Assembly
         const_16 = Assembler.to_binary_str(CONST_16_BITS, const_16_dec)
         const = target_reg + const_16
       else
-        const_dec = tokens[1]
+        jump_target = tokens[1]
+        if jump_target.is_a? String
+          const_dec = get_label_absolute(jump_target)
+        else
+          const_dec = jump_target
+        end
         const = Assembler.to_binary_str(CONST_BITS, const_dec)
       end
       
