@@ -23,6 +23,7 @@ module Assembly
 
     def initialize(source_lines)
       @source_lines = source_lines
+      @labels = Hash.new
     end
 
     def get_mif_header(width, depth, address_radix, data_radix)
@@ -73,6 +74,7 @@ module Assembly
       tokenized_lines.each_with_index do |tokens, i|
         first_token = tokens.first
         if first_token.include? ":" #if line has label
+          first_token = first_token[0..-2]
           @labels[first_token] = i #save label in map
           tokens.shift #remove label from tokens
         end
@@ -169,7 +171,7 @@ module Assembly
       else
         jump_target = tokens[1]
         if jump_target.to_i.to_s != jump_target #token is a string
-          const_dec = get_label_absolute(jump_target)
+          const_dec = get_label_absolute(jump_target).to_s
         else #token is already a number
           const_dec = jump_target
         end
