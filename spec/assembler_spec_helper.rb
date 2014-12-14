@@ -134,7 +134,15 @@ def get_adds_tokens
   ["ADD$", "R2", "R0", "R4"]
 end
 
-def test_convert_binary(assembler, tokens, expected_binary_form)
-  binary_form = assembler.convert_binary tokens
+def get_blabel_tokens
+  ["B", "BELOW"]
+end
+
+def get_jlabel_tokens
+  ["J", "ADDR12"]
+end
+
+def test_convert_binary(assembler, tokens, expected_binary_form, current_index = 0)
+  binary_form = assembler.convert_binary(tokens, current_index)
   expect(binary_form).to eq(expected_binary_form)
 end

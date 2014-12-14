@@ -103,6 +103,11 @@ describe "Assembler" do
         test_convert_binary(@assembler, get_jump_tokens, "000000000000001110000000")
       end
 
+      it "correctly converts jump tokens with label into binary" do
+        expect(@assembler).to receive(:get_label_absolute).and_return "12"
+        test_convert_binary(@assembler, get_jlabel_tokens, "000000000000000011000000")
+      end
+
       it "correctly converts jump and link tokens into binary" do
         test_convert_binary(@assembler, get_jal_tokens, "000000000000001110000001")
       end
@@ -134,6 +139,11 @@ describe "Assembler" do
 
       it "correctly converts branch tokens into binary" do
         test_convert_binary(@assembler, get_b_tokens, "000000000000111100000100")
+      end
+
+      it "correctly converts branch tokens with label into binary" do 
+        expect(@assembler).to receive(:get_label_relative).and_return "2"
+        test_convert_binary(@assembler, get_blabel_tokens, "000000000000001000000100", 2)
       end
 
       it "correctly converts branch and link tokens into binary" do
@@ -221,7 +231,7 @@ describe "Assembler" do
     it "converts an array of tokenized lines into a mif-formatted string" do
       assembler = Assembly::Assembler.new ""
       expect(assembler).to receive(:tokenize_lines)
-      expect(assembler).to receive(:tokenized_lines).and_return([get_add_tokens,get_jump_tokens])
+      expect(assembler).to receive(:tokenized_lines).twice.and_return([get_add_tokens,get_jump_tokens])
       expect(assembler.return_mif).to eq "WIDTH=24;\nDEPTH=1024;\n\nADDRESS_RADIX=UNS;\nDATA_RADIX=HEX;\n\nCONTENT BEGIN\n\t0 : 20460C;\n\t1 : 000380;\n\t[2..1023] : 000000;\nEND;\n"
     end
 
