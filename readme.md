@@ -1,7 +1,7 @@
 assembly
 ==============
 
-The assembler I created for CSCE 230's processor project.
+A 2-pass assembler created for UNL CSCE 230's processor project.
 
 ##Usage:
 
