@@ -205,7 +205,7 @@ module Assembly
 
     def get_label_relative(current_index, label)
       label_index = labels[label]
-      relative_dist = label_index - current_index - 1
+      relative_dist = label_index - current_index
       return relative_dist.to_s
     end
 
