@@ -26,6 +26,10 @@ module Assembly
       @labels = Hash.new
     end
 
+    def get_dummy_line
+      dummy_line = "\t0 : 000000;\n"
+    end
+
     def get_mif_header(width, depth, address_radix, data_radix)
       "WIDTH=#{width};\nDEPTH=#{depth};\n\nADDRESS_RADIX=#{address_radix};\nDATA_RADIX=#{data_radix};\n\nCONTENT BEGIN\n"
     end
@@ -43,19 +47,20 @@ module Assembly
       save_labels
       mif_lines = Array.new
       mif_lines << get_mif_header(width, depth, address_radix, data_radix)
+      mif_lines << get_dummy_line
       depth_i = depth.to_i
-      counter = 0
+      counter = 1
       if (data_radix == "HEX")
-        tokenized_lines.each_with_index do |tokens, i|
-          hex = convert_hex(tokens, i).upcase
+        tokenized_lines.each do |tokens|
+          hex = convert_hex(tokens, counter).upcase
           line = "\t#{counter} : #{hex};\n"
           counter += 1
           raise "Too many lines" if counter >= depth_i
           mif_lines << line
         end
       elsif (data_radix == "BIN")
-        tokenized_lines.each_with_index do |tokens, i|
-          bin = convert_binary(tokens, i).upcase
+        tokenized_lines.each do |tokens|
+          bin = convert_binary(tokens, counter).upcase
           line = "\t#{counter} : #{bin};\n"
           counter += 1
           raise "Too many lines" if counter >= depth_i
